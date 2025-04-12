@@ -273,9 +273,12 @@
           .catch(error => {
             console.error("配置加载错误:", error);
     console.error("请求的配置文件 URL:", configUrl);
-    statusMessage.textContent = `无法加载客户配置，错误信息: ${error.message}，请检查客户编号是否正确`;
-    errorContainer.style.display = 'block';
-    loading.classList.add('hidden');
+    if (error.response) {
+    error.response.text().then(text => console.error("服务器响应内容:", text));
+  }
+  statusMessage.textContent = `无法加载客户配置，错误信息: ${error.message}`;
+  errorContainer.style.display = 'block';
+  loading.classList.add('hidden');
           });
       }
 
